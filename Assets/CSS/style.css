@@ -1,0 +1,90 @@
+main {
+    text-align: center;
+}
+
+#newPhonePage {
+    width: 85%;
+    max-width: 700px;
+    position: fixed;
+    top: 33%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 0 25px 0;
+    border: 1px solid rgb(160, 160, 160);
+    border-radius: 5px;
+    background-color: white;
+    display: none;
+}
+
+#closeIcon {
+    width: 95%;
+    text-align: right;
+}
+
+#newPhoneForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#newPhoneForm i {
+    font-size: 1.5em;
+    font-weight: 500;
+    color: brown;
+    cursor: pointer;
+}
+
+#newPhoneForm input {
+    width: 80%;
+    max-width: 600px;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(160, 160, 160);
+}
+
+#btnReset {
+    width: 75px;
+    height: 37.5px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 1em;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-radius: 9px;
+    transition: background-color 0.2s ease;
+}
+ 
+#btnReset:hover {
+    background-color: brown;
+    color: white;
+    border: 3px solid rgba(255,255,255,0.2);
+}
+
+#btnCreate {
+    width: 75px;
+    height: 37.5px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 1em;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-radius: 9px;
+    transition: background-color 0.2s ease;
+}
+
+#btnCreate:hover {
+    background-color: rgb(80, 176, 255);
+    color: white;
+    border: 3px solid rgba(255,255,255,0.2);
+}
+.card {
+    margin: 20px 5px 5px 10px;
+}
+.card-img {
+    height: 300px;
+    width: auto;
+}
+#detailsPage {
+    
+}
