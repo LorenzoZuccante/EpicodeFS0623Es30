@@ -1,4 +1,5 @@
-/*eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTc0NDZhODJjNmEwZDAwMTg0OTU5YjMiLCJpYXQiOjE3MDIxMTkwODAsImV4cCI6MTcwMzMyODY4MH0.TV6bmfTBaI7-yg8NAEz0G1tmzRaxXtg59UunePgc3nw"*/
+
+//impostazioni generali
 
 const urlApi = "https://striveschool-api.herokuapp.com/api/product/"
 const phoneId = ""
@@ -11,9 +12,7 @@ const options = {
         },
 }
 
-// fetchPhone(urlApi, postPhone('samsung galaxy s21', 'telefono molto grande', 'samsung', 'https://m.media-amazon.com/images/I/614r6gJOBeL.jpg', 499))
-// fetchPhone(urlWithPhoneId, putPhone('iphone', 'meh', 'apple', '#', 9999))
-// fetchPhone(urlWithPhoneId, deletePhone())
+
 
 fetchShowPhonesArray(urlApi, options)
 
@@ -69,7 +68,9 @@ function deletePhone() {
             },
     }
 }
-//xIcon function & newItem
+
+//newPhonePage
+
 const xIcon = document.querySelector('#xIcon')
 const xIconDiv = document.querySelector('#newPhonePage')
 const newItem = document.querySelector('#newItem')
@@ -81,6 +82,7 @@ const phonePrice = document.querySelector('#phonePrice')
 const btnReset = document.querySelector('#btnReset')
 const btnCreate = document.querySelector('#btnCreate')
 const container = document.querySelector('.container')
+
 
 showPhoneCards(urlApi, options)
 
@@ -118,12 +120,13 @@ showPhoneCards(urlApi, options)
                                     <div class="card-body">
                                       <h5 class="card-title">${phoneName.value}</h5>
                                       <a href="#" class="btn btn-primary">Edit</a>
-                                      <a href="#" class="btn btn-primary">Details</a>
+                                      <a href="#" class="btn btn-primary buttonDetail">Details</a>
                                     </div>
                                 </div>
                             `
             container.innerHTML += cards
             newPhonePage.style.display = 'none'
+            showPhoneCards(urlApi,options)
         }
         else {
             alert('Fill all the boxes')
@@ -139,6 +142,18 @@ showPhoneCards(urlApi, options)
             cards += createCard(data[i])
         }
         container.innerHTML = cards
+        const btnsDetail = document.querySelectorAll('.buttonDetail')
+        for (let i=0;i<btnsDetail.length; i++) {
+            btnsDetail[i].addEventListener('click', () => {
+                detailsPageImg.innerHTML = `<img src="${data[i].imageUrl}" alt="${data[i].name}">`
+            detailsPagePhoneName.textContent = 'Name: ' + data[i].name
+            detailsPagePhoneDesc.textContent = 'Description: ' + data[i].description
+            detailsPagePhoneBrand.textContent = 'Brand: ' + data[i].brand
+            detailsPagePhoneImgUrl.textContent = 'Image url: ' + data[i].imageUrl
+            detailsPagePhonePrice.textContent = 'Price: ' + data[i].price + '€'
+            detailsPage.style.display ='flex';
+            })
+        }
     }
     
     function createCard(phone) {
@@ -149,8 +164,24 @@ showPhoneCards(urlApi, options)
                 <div class="card-body">
                   <h5 class="card-title">${phone.name}</h5>
                   <a href="#" class="btn btn-primary">Edit</a>
-                  <a href="#" class="btn btn-primary">Details</a>
+                  <a href="#" class="btn btn-primary buttonDetail">Details</a>
                 </div>
             </div>
         `
     }
+
+    //detailsPage
+
+    const detailsPage = document.querySelector('#detailsPage')
+    const detailsPageImg = document.querySelector('.detailsPageImg')
+    const detailsPagePhoneName = document.querySelector('.detailsPagePhoneName')
+    const detailsPagePhoneDesc = document.querySelector('.detailsPagePhoneDesc')
+    const detailsPagePhoneBrand = document.querySelector('.detailsPagePhoneBrand')
+    const detailsPagePhoneImgUrl = document.querySelector('.detailsPagePhoneImgUrl')
+    const detailsPagePhonePrice = document.querySelector('.detailsPagePhonePrice')
+    const editBtn = document.querySelector('.editBtn')
+    const xIcon2 = document.querySelector('#xIcon2')
+
+    xIcon2.addEventListener('click', () => {
+        detailsPage.style.display = 'none'
+    })
