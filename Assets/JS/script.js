@@ -83,11 +83,36 @@ const btnReset = document.querySelector('#btnReset')
 const btnCreate = document.querySelector('#btnCreate')
 const container = document.querySelector('.container')
 
+const detailsPage = document.querySelector('#detailsPage')
+const detailsPageImg = document.querySelector('.detailsPageImg')
+const detailsPagePhoneName = document.querySelector('.detailsPagePhoneName')
+const detailsPagePhoneDesc = document.querySelector('.detailsPagePhoneDesc')
+const detailsPagePhoneBrand = document.querySelector('.detailsPagePhoneBrand')
+const detailsPagePhoneImgUrl = document.querySelector('.detailsPagePhoneImgUrl')
+const detailsPagePhonePrice = document.querySelector('.detailsPagePhonePrice')
+const editBtn = document.querySelector('.editBtn')
+const xIcon2 = document.querySelector('#xIcon2')
+
+const editPage = document.querySelector('#editPage')
+const editPageImg = document.querySelector('#editPageImg')
+const xIcon3 = document.querySelector('#xIcon3')
+const phoneNameEdit = document.querySelector('#phoneNameEdit')
+const phoneDescEdit = document.querySelector('#phoneDescEdit')
+const phoneBrandEdit = document.querySelector('#phoneBrandEdit')
+const phoneImgUrlEdit = document.querySelector('#phoneImgUrlEdit')
+const phonePriceEdit = document.querySelector('#phonePriceEdit')
+const btnEdit2 = document.querySelector('#btnEdit2')
+const btnDelete2 = document.querySelector('#btnDelete2')
+const btnReset2 = document.querySelector('#btnReset2')
+
+let urlObject = ''
 
 showPhoneCards(urlApi, options)
 
     newItem.addEventListener('click', () => {
         xIconDiv.style.display = 'block'
+        detailsPage.style.display = 'none'
+        editPage.style.display = 'none'
         phoneName.value = ''
         phoneDesc.value = ''
         phoneBrand.value = ''
@@ -119,7 +144,7 @@ showPhoneCards(urlApi, options)
                                     <img src="${phoneImgUrl.value}" class="card-img" alt="">
                                     <div class="card-body">
                                       <h5 class="card-title">${phoneName.value}</h5>
-                                      <a href="#" class="btn btn-primary">Edit</a>
+                                      <a href="#" class="btn btn-primary buttonEdit">Edit</a>
                                       <a href="#" class="btn btn-primary buttonDetail">Details</a>
                                     </div>
                                 </div>
@@ -152,8 +177,51 @@ showPhoneCards(urlApi, options)
             detailsPagePhoneImgUrl.textContent = 'Image url: ' + data[i].imageUrl
             detailsPagePhonePrice.textContent = 'Price: ' + data[i].price + '€'
             detailsPage.style.display ='flex';
+            xIconDiv.style.display = 'none'
+            editPage.style.display = 'none'
             })
         }
+        const btnEditArr = document.querySelectorAll('.buttonEdit')
+        for (let i=0;i<btnEditArr.length;i++){
+            btnEditArr[i].addEventListener('click', () => {
+                phoneNameEdit.value = data[i].name
+                phoneDescEdit.value = data[i].description
+                phoneBrandEdit.value = data[i].brand
+                phoneImgUrlEdit.value = data[i].imageUrl
+                phonePriceEdit.value = data[i].price
+                editPage.style.display = 'flex'
+                xIconDiv.style.display = 'none'
+                detailsPage.style.display = 'none'
+                urlObject = urlApi + data[i]._id
+                console.log(urlObject)
+            })
+        }
+        btnEdit2.addEventListener('click', async (e) => {
+            e.preventDefault()
+            try{
+                await fetchPhone(urlObject, putPhone(phoneNameEdit.value,phoneDescEdit.value,phoneBrandEdit.value,phoneImgUrlEdit.value,phonePriceEdit.value))
+                editPage.style.display = 'none'
+                window.location.reload()
+            }catch(error){console.log('errore durante la modifica',error)}
+
+        })
+        btnDelete2.addEventListener('click', (e) => {
+            e.preventDefault()
+            const cardNames = document.querySelectorAll('.card-title')
+            for (let i = 0; i < cardNames.length; i++) {
+               if(cardNames[i].textContent === phoneNameEdit.value){
+                cardNames[i].closest('.card').remove()
+               } 
+            }
+            fetchPhone(urlObject,{
+                method: 'DELETE',
+                headers: {
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTc0NDZhODJjNmEwZDAwMTg0OTU5YjMiLCJpYXQiOjE3MDIxMTkwODAsImV4cCI6MTcwMzMyODY4MH0.TV6bmfTBaI7-yg8NAEz0G1tmzRaxXtg59UunePgc3nw",
+                    "Content-Type": "application/json",
+                    },
+            })
+            editPage.style.display = 'none'
+        })
     }
     
     function createCard(phone) {
@@ -163,7 +231,7 @@ showPhoneCards(urlApi, options)
                 <img src="${phone.imageUrl}" class="card-img" alt="">
                 <div class="card-body">
                   <h5 class="card-title">${phone.name}</h5>
-                  <a href="#" class="btn btn-primary">Edit</a>
+                  <a href="#" class="btn btn-primary buttonEdit">Edit</a>
                   <a href="#" class="btn btn-primary buttonDetail">Details</a>
                 </div>
             </div>
@@ -172,16 +240,24 @@ showPhoneCards(urlApi, options)
 
     //detailsPage
 
-    const detailsPage = document.querySelector('#detailsPage')
-    const detailsPageImg = document.querySelector('.detailsPageImg')
-    const detailsPagePhoneName = document.querySelector('.detailsPagePhoneName')
-    const detailsPagePhoneDesc = document.querySelector('.detailsPagePhoneDesc')
-    const detailsPagePhoneBrand = document.querySelector('.detailsPagePhoneBrand')
-    const detailsPagePhoneImgUrl = document.querySelector('.detailsPagePhoneImgUrl')
-    const detailsPagePhonePrice = document.querySelector('.detailsPagePhonePrice')
-    const editBtn = document.querySelector('.editBtn')
-    const xIcon2 = document.querySelector('#xIcon2')
+    
 
     xIcon2.addEventListener('click', () => {
         detailsPage.style.display = 'none'
+    })
+
+    //editPage
+    
+
+    xIcon3.addEventListener('click', () => {
+        editPage.style.display = 'none'
+    })
+
+    btnReset2.addEventListener('click', (e) => {
+        e.preventDefault()
+        phoneNameEdit.value = ''
+        phoneDescEdit.value = ''
+        phoneBrandEdit.value = ''
+        phoneImgUrlEdit.value = ''
+        phonePriceEdit.value = ''
     })
